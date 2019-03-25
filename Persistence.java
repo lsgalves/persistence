@@ -36,7 +36,7 @@ import java.util.Scanner;
  * padrão CSV.
  *
  * @author Leo
- * @version 0.1
+ * @version 0.2
  */
 public class Persistence {
 
@@ -103,6 +103,16 @@ public class Persistence {
         save();
     }
 
+    /**
+     * Remove um registro na base de dados final e temporária.
+     *
+     * @param i o índice do registro a ser removido.
+     */
+    public void remove(int i) {
+        db.remove(i);
+        save();
+    }
+    
     /**
      * Salva a base de dados temporária.
      */
