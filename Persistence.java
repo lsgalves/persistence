@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -33,11 +32,11 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Classe para persist√™ncia de dados em arquivos, os dados s√£o gravados no
- * padr√£o CSV.
+ * Classe para persistÍncia de dados em arquivos, os dados s„o gravados no
+ * padr„o CSV.
  *
  * @author Leo
- * @version 0.1
+ * @version 0.2
  */
 public class Persistence {
 
@@ -45,8 +44,8 @@ public class Persistence {
     private List<List<Object>> db;
 
     /**
-     * Recebe o caminho para o arquivo *.csv (n√£o √© necess√°rios que a extens√£o
-     * seja .csv) que servir√° de base de dados final.
+     * Recebe o caminho para o arquivo *.csv (n„o È necess·rios que a extens„o
+     * seja .csv) que servir· de base de dados final.
      *
      * @param PATH o caminho para o arquivo.
      */
@@ -56,8 +55,8 @@ public class Persistence {
 
     /**
      *
-     * @param i o √≠ndice a ser buscado.
-     * @return o registro imut√°vel relativo ao √≠ndice passado como par√¢metro.
+     * @param i o Ìndice do registro a ser buscado.
+     * @return o registro imut·vel relativo ao Ìndice passado como par‚metro.
      */
     public List<Object> get(int i) {
         return Collections.unmodifiableList(db.get(i));
@@ -65,15 +64,15 @@ public class Persistence {
 
     /**
      *
-     * @return todos os registros de forma imut√°vel da base de dados.
+     * @return todos os registros de forma imut·vel da base de dados.
      */
     public List<List<Object>> getAll() {
-        return Collections.unmodifiableList(db);
+        return db;
     }
 
     /**
-     * M√©todo para carregar os registros da base de dados final (arquivo) para
-     * base de dados tempor√°ria.
+     * MÈtodo para carregar os registros da base de dados final (arquivo) para
+     * base de dados tempor·ria.
      */
     public void load() {
         List<List<Object>> dbFile = new ArrayList<>();
@@ -88,14 +87,14 @@ public class Persistence {
             }
             scanner.close();
         } catch (FileNotFoundException ex) {
-            System.out.println("File not Found: " + ex.getMessage());
+            System.out.println("Warning: " + ex.getMessage());
         } finally {
             db = dbFile;
         }
     }
 
     /**
-     * Adiciona um novo registro na base de dados final e tempor√°ria.
+     * Adiciona um novo registro na base de dados final e tempor·ria.
      *
      * @param registry uma lista com os atributos do objeto a ser adicionado.
      */
@@ -103,9 +102,19 @@ public class Persistence {
         db.add(registry);
         save();
     }
+    
+    /**
+     * Remove um registro na base de dados final e tempor·ria.
+     * 
+     * @param i o Ìndice do registro a ser removido.
+     */
+    public void remove(int i) {
+        db.remove(i);
+        save();
+    }
 
     /**
-     * Salva a base de dados tempor√°ria.
+     * Salva a base de dados tempor·ria.
      */
     private void save() {
         String[] rows = new String[db.size()];
@@ -128,7 +137,7 @@ public class Persistence {
 
             pw.close();
         } catch (FileNotFoundException ex) {
-            System.out.println("File not Found: " + ex.getMessage());
+            System.out.println("Warning: " + ex.getMessage());
         }
     }
 
