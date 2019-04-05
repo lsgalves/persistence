@@ -112,7 +112,20 @@ public class Persistence {
         db.remove(i);
         save();
     }
-    
+
+    /**
+     * Atualiza os dados com a lista dos novos atributos do registro que foi
+     * passado o índice como parâmetro.
+     *
+     * @param i o índice do registro a ser atualizado.
+     * @param registry a lista com os atributos do objeto a ser adicionado.
+     */
+    public void update(int i, List<Object> registry) {
+        db.remove(i);
+        db.add(i, registry);
+        save();
+    }
+
     /**
      * Salva a base de dados temporária.
      */
