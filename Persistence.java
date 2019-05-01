@@ -32,8 +32,8 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Classe para persistência de dados em arquivos, os dados são gravados no
- * padrão CSV.
+ * Classe para persistï¿½ncia de dados em arquivos, os dados sï¿½o gravados no
+ * padrï¿½o CSV.
  *
  * @author Leo
  * @version 0.2
@@ -44,8 +44,8 @@ public class Persistence {
     private List<List<Object>> db;
 
     /**
-     * Recebe o caminho para o arquivo *.csv (não é necessários que a extensão
-     * seja .csv) que servirá de base de dados final.
+     * Recebe o caminho para o arquivo *.csv (nï¿½o ï¿½ necessï¿½rios que a extensï¿½o
+     * seja .csv) que servirï¿½ de base de dados final.
      *
      * @param PATH o caminho para o arquivo.
      */
@@ -55,8 +55,8 @@ public class Persistence {
 
     /**
      *
-     * @param i o índice do registro a ser buscado.
-     * @return o registro imutável relativo ao índice passado como parâmetro.
+     * @param i o ï¿½ndice do registro a ser buscado.
+     * @return o registro imutï¿½vel relativo ao ï¿½ndice passado como parï¿½metro.
      */
     public List<Object> get(int i) {
         return Collections.unmodifiableList(db.get(i));
@@ -64,15 +64,15 @@ public class Persistence {
 
     /**
      *
-     * @return todos os registros de forma imutável da base de dados.
+     * @return todos os registros de forma imutï¿½vel da base de dados.
      */
     public List<List<Object>> getAll() {
         return db;
     }
 
     /**
-     * Método para carregar os registros da base de dados final (arquivo) para
-     * base de dados temporária.
+     * Mï¿½todo para carregar os registros da base de dados final (arquivo) para
+     * base de dados temporï¿½ria.
      */
     public void load() {
         List<List<Object>> dbFile = new ArrayList<>();
@@ -94,7 +94,7 @@ public class Persistence {
     }
 
     /**
-     * Adiciona um novo registro na base de dados final e temporária.
+     * Adiciona um novo registro na base de dados final e temporï¿½ria.
      *
      * @param registry uma lista com os atributos do objeto a ser adicionado.
      */
@@ -104,9 +104,9 @@ public class Persistence {
     }
     
     /**
-     * Remove um registro na base de dados final e temporária.
+     * Remove um registro na base de dados final e temporï¿½ria.
      * 
-     * @param i o índice do registro a ser removido.
+     * @param i o ï¿½ndice do registro a ser removido.
      */
     public void remove(int i) {
         db.remove(i);
@@ -114,7 +114,30 @@ public class Persistence {
     }
 
     /**
-     * Salva a base de dados temporária.
+     * Remove um registro na base de dados final e temporÃ¡ria.
+     *
+     * @param i o Ã­ndice do registro a ser removido.
+     */
+    public void remove(int i) {
+        db.remove(i);
+        save();
+    }
+
+    /**
+     * Atualiza os dados com a lista dos novos atributos do registro que foi
+     * passado o Ã­ndice como parÃ¢metro.
+     *
+     * @param i o Ã­ndice do registro a ser atualizado.
+     * @param registry a lista com os atributos do objeto a ser adicionado.
+     */
+    public void update(int i, List<Object> registry) {
+        db.remove(i);
+        db.add(i, registry);
+        save();
+    }
+
+    /**
+     * Salva a base de dados temporÃ¡ria.
      */
     private void save() {
         String[] rows = new String[db.size()];
