@@ -55,7 +55,7 @@ public class Persistence {
 
     /**
      *
-     * @param i o índice a ser buscado.
+     * @param i o índice do registro a ser buscado.
      * @return o registro imutável relativo ao índice passado como parâmetro.
      */
     public List<Object> get(int i) {
@@ -87,7 +87,7 @@ public class Persistence {
             }
             scanner.close();
         } catch (FileNotFoundException ex) {
-            System.out.println("File not Found: " + ex.getMessage());
+            System.err.println("Warning: " + ex.getMessage());
         } finally {
             db = dbFile;
         }
@@ -100,6 +100,29 @@ public class Persistence {
      */
     public void add(List<Object> registry) {
         db.add(registry);
+        save();
+    }
+    
+    /**
+     * Remove um registro na base de dados final e temporária.
+     * 
+     * @param i o índice do registro a ser removido.
+     */
+    public void remove(int i) {
+        db.remove(i);
+        save();
+    }
+
+    /**
+     * Atualiza os dados com a lista dos novos atributos do registro que foi
+     * passado o índice como parâmetro.
+     *
+     * @param i o índice do registro a ser atualizado.
+     * @param registry a lista com os atributos do objeto a ser adicionado.
+     */
+    public void update(int i, List<Object> registry) {
+        db.remove(i);
+        db.add(i, registry);
         save();
     }
 
@@ -150,7 +173,7 @@ public class Persistence {
 
             pw.close();
         } catch (FileNotFoundException ex) {
-            System.out.println("File not Found: " + ex.getMessage());
+            System.err.println("Warning: " + ex.getMessage());
         }
     }
 
