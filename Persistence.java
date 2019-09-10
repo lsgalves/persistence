@@ -1,7 +1,7 @@
 /*
  * The MIT License
  *
- * Copyright 2019 Leo.
+ * Copyright 2019 Leonardo Galves.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -35,7 +35,7 @@ import java.util.Scanner;
  * Classe para persistência de dados em arquivos, os dados são gravados no
  * padrão CSV.
  *
- * @author Leo
+ * @author Leonardo Galves
  * @version 0.2
  */
 public class Persistence {
