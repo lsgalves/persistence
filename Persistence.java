@@ -32,11 +32,10 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Classe para persistência de dados em arquivos, os dados são gravados no
- * padrão CSV.
+ * Class for persisting data in files, data is written to CSV standard.
  *
- * @author Leonardo Galves
- * @version 0.2
+ * @author LeonardoGalves
+ * @version 0.3
  */
 public class Persistence {
 
@@ -44,35 +43,17 @@ public class Persistence {
     private List<List<Object>> db;
 
     /**
-     * Recebe o caminho para o arquivo *.csv (não é necessários que a extensão
-     * seja .csv) que servirá de base de dados final.
+     * Receives the path to the file that will serve as the final database.
      *
-     * @param PATH o caminho para o arquivo.
+     * @param PATH path to the file.
      */
     public Persistence(String PATH) {
         this.PATH = PATH;
     }
 
     /**
-     *
-     * @param i o índice do registro a ser buscado.
-     * @return o registro imutável relativo ao índice passado como parâmetro.
-     */
-    public List<Object> get(int i) {
-        return Collections.unmodifiableList(db.get(i));
-    }
-
-    /**
-     *
-     * @return todos os registros de forma imutável da base de dados.
-     */
-    public List<List<Object>> getAll() {
-        return Collections.unmodifiableList(db);
-    }
-
-    /**
-     * Método para carregar os registros da base de dados final (arquivo) para
-     * base de dados temporária.
+     * Method to load registries from the final database (file) to
+     * temporary database.
      */
     public void load() {
         List<List<Object>> dbFile = new ArrayList<>();
@@ -87,72 +68,62 @@ public class Persistence {
             }
             scanner.close();
         } catch (FileNotFoundException ex) {
-            System.err.println("Warning: " + ex.getMessage());
+            System.err.println("The database is not found: " + ex.getMessage());
         } finally {
             db = dbFile;
         }
     }
 
     /**
-     * Adiciona um novo registro na base de dados final e temporária.
      *
-     * @param registry uma lista com os atributos do objeto a ser adicionado.
+     * @param i registry index.
+     * @return unchanging record relative to the index.
+     */
+    public List<Object> get(int i) {
+        return Collections.unmodifiableList(db.get(i));
+    }
+
+    /**
+     *
+     * @return all registries immutably from the database.
+     */
+    public List<List<Object>> getAll() {
+        return Collections.unmodifiableList(db);
+    }
+
+    /**
+     * Adds a new registry to the temporary database.
+     *
+     * @param registry list with the attributes of the object to be added.
      */
     public void add(List<Object> registry) {
         db.add(registry);
-        save();
-    }
-    
-    /**
-     * Remove um registro na base de dados final e temporária.
-     * 
-     * @param i o índice do registro a ser removido.
-     */
-    public void remove(int i) {
-        db.remove(i);
-        save();
     }
 
     /**
-     * Atualiza os dados com a lista dos novos atributos do registro que foi
-     * passado o índice como parâmetro.
+     * Remove a registry in the temporary database.
      *
-     * @param i o índice do registro a ser atualizado.
-     * @param registry a lista com os atributos do objeto a ser adicionado.
+     * @param i registry index.
+     */
+    public void remove(int i) {
+        db.remove(i);
+    }
+
+    /**
+     * Updates the registry with the attributes.
+     *
+     * @param i registry index.
+     * @param registry list with the attributes of the object to be added.
      */
     public void update(int i, List<Object> registry) {
         db.remove(i);
         db.add(i, registry);
-        save();
     }
 
     /**
-     * Remove um registro na base de dados final e temporária.
-     *
-     * @param i o índice do registro a ser removido.
+     * Saves the temporary database in the file.
      */
-    public void remove(int i) {
-        db.remove(i);
-        save();
-    }
-
-    /**
-     * Atualiza os dados com a lista dos novos atributos do registro que foi
-     * passado o índice como parâmetro.
-     *
-     * @param i o índice do registro a ser atualizado.
-     * @param registry a lista com os atributos do objeto a ser adicionado.
-     */
-    public void update(int i, List<Object> registry) {
-        db.remove(i);
-        db.add(i, registry);
-        save();
-    }
-
-    /**
-     * Salva a base de dados temporária.
-     */
-    private void save() {
+    public void save() {
         String[] rows = new String[db.size()];
         for (int i = 0; i < db.size(); i++) {
             rows[i] = "";
@@ -173,7 +144,7 @@ public class Persistence {
 
             pw.close();
         } catch (FileNotFoundException ex) {
-            System.err.println("Warning: " + ex.getMessage());
+            System.err.println("The database is not found: " + ex.getMessage());
         }
     }
 
